@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./utils/db.js";
+import userRoute from "./routes/user.route.js"
 dotenv.config({});
 const app=express();
 connectDB();
@@ -18,6 +19,9 @@ const corsoption={
 app.use(cors(corsoption));
 const PORT=process.env.PORT ||3000;
 
+
+//All api is here
+app.use("/api/user/",userRoute);
 
 app.listen(PORT,()=>{
     console.log(`Server running at pot ${PORT}`);
