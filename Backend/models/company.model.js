@@ -13,7 +13,7 @@ const companyschema=mongoose.Schema({
     },
     location:{
         type:String,
-        required:true
+       // required:true
     },
     logo:{
         type:String
