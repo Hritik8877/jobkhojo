@@ -1,10 +1,10 @@
 import React from 'react'
-function App() {
- 
+import Navbar from './components/shared/Navbar.jsx'
 
+const App = () => {
   return (
     <>
-      <div className='bg-red-500'>hrk</div>
+    <Navbar/>
     </>
   )
 }
