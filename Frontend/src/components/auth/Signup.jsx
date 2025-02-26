@@ -6,7 +6,7 @@ const Signup = () => {
     <div>
       <Navbar/>
       <div>
-        <h1 className='text-center text-3xl font-bold'>Signup</h1>
+        <h1 className='text-xl font-bold mb-5'>Signup</h1>
         
       </div>
     </div>
