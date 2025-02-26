@@ -1,18 +1,76 @@
 import React from "react";
 import Navbar from "../shared/Navbar";
 import { Label } from "../ui/label";
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { RadioGroup } from "../ui/radio-group";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
+import { USER_API_END_POINT } from "@/utils/constant";
+import { toast } from "sonner";
 
 const Signup = () => {
+  const [input,setinput]=useState({
+    fullName:"",
+    email:"",
+    phoneNumber:"",
+    password:"",
+    role:"",
+     file:""
+  });
+
+  const navigate=useNavigate();
+
+  const changeeventhandler=(e)=>{
+    setinput({...input,[e.target.name]:e.target.value})
+
+  }
+  const changeeventfilehandler=(e)=>{
+    setinput({...input,file:e.target.files?.[0]})
+  }
+
+  const submithandler=async (e)=>{
+    e.preventDefault();
+   const formdata=new FormData();
+   formdata.append("fullname",input.fullName)
+   formdata.append("email",input.email)
+   formdata.append("phoneNumber",input.phoneNumber)
+   formdata.append("password",input.password)
+   formdata.append("role",input.role)
+   if(input.file){
+    formdata.append("file",input.file)
+   }
+    try {
+      console.log(input);
+      const res=await  axios.post(`${USER_API_END_POINT}/register`,formdata,{
+        headers:{
+          "Content-Type":"multipart/form-data"
+        },
+        withCredentials:true
+      });
+      if(res.data.success){
+        console.log(res.data);
+        navigate("/Login")
+        toast.success(res.data.message)
+        
+      }
+      
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message)
+      
+      
+    }
+    
+  }
+
   return (
     <div>
       <Navbar />
       <div className="flex items-center justify-center max-w-7xl mx-auto">
         <form
-          action=""
+          onSubmit={submithandler}
           className="w-1/2 border border-gray-200 rounded-md p-4 my-10"
         >
           <h1 className="font-bold text-xl mb-5">Signup</h1>
@@ -21,6 +79,9 @@ const Signup = () => {
             <Label>Full Name</Label>
             <Input
               type="text"
+              value={input.fullName}
+              name="fullName"
+              onChange={changeeventhandler}
               placeholder="Hritik"
               
             />
@@ -29,6 +90,9 @@ const Signup = () => {
             <Label>Email</Label>
             <Input
               type="email"
+              value={input.email}
+              name="email"
+              onChange={changeeventhandler}
               placeholder="Email@gmail.com"
               
             />
@@ -37,6 +101,9 @@ const Signup = () => {
             <Label>Phone Number</Label>
             <Input
               type="text"
+              value={input.phoneNumber}
+              name="phoneNumber"
+              onChange={changeeventhandler}
               placeholder="8409397263"
               
             />
@@ -45,6 +112,9 @@ const Signup = () => {
             <Label>password</Label>
             <Input
               type="password"
+              value={input.password}
+              name="password"
+              onChange={changeeventhandler}
               placeholder="Hritik"
               
             />
@@ -57,6 +127,8 @@ const Signup = () => {
                 type="radio"
                 name="role"
                 value="student"
+                checked={input.role==="student"}
+                onChange={changeeventhandler}
                 className="cursor-pointer"
                 />
                 <Label htmlFor="option-one">student</Label>
@@ -66,6 +138,8 @@ const Signup = () => {
                 type="radio"
                 name="role"
                 value="recuriter"
+                checked={input.role==="recuriter"}
+                onChange={changeeventhandler}
                 className="cursor-pointer"
                 />
                 <Label htmlFor="option-two">Recruiter</Label>
@@ -77,6 +151,8 @@ const Signup = () => {
                 <Input
                  accept="image/*"
                  type="file"
+                 name="file"
+                 onChange={changeeventfilehandler}
                  className="cursor-pointer"
                 />
               </div>
