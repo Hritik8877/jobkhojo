@@ -5,6 +5,7 @@ import { RadioGroup } from "../ui/radio-group";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
 
@@ -13,6 +14,8 @@ const Login = () => {
       password:"",
       role:"",
     });
+
+    const navigate=useNavigate();
   
     const changeeventhandler=(e)=>{
       setinput({...input,[e.target.name]:e.target.value})
