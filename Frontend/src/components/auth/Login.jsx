@@ -6,6 +6,9 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import axios from "axios";
+import { USER_API_END_POINT } from "@/utils/constant";
 
 const Login = () => {
 
@@ -22,16 +25,17 @@ const Login = () => {
   
     }
    
+
     const submithandler=async (e)=>{
       e.preventDefault();
      
       try {
         console.log(input);
-        const res=await  axios.post(`${USER_API_END_POINT}/login`,input,{
+        const res=await  axios.post(`http://localhost:5000/api/user/login`,input,{
           headers:{
             "Content-Type":"application/json"
           },
-          withCredentials:true
+          //withCredentials:true
         });
         if(res.data.success){
           console.log(res.data);
@@ -98,8 +102,8 @@ const Login = () => {
               <Input
                 type="radio"
                 name="role"
-                value="recuriter"
-                checked={input.role==="recuriter"}
+                value="recruiter"
+                checked={input.role==="recruiter"}
                 onChange={changeeventhandler}
                 className="cursor-pointer"
                 />
