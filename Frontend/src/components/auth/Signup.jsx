@@ -9,6 +9,8 @@ import { useState } from "react";
 import axios from "axios";
 import { USER_API_END_POINT } from "@/utils/constant";
 import { toast } from "sonner";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "@/redux/authslice";
 
 const Signup = () => {
   const [input,setinput]=useState({
@@ -21,6 +23,8 @@ const Signup = () => {
   });
 
   const navigate=useNavigate();
+  const dispatch=useDispatch();
+  const {loading}=useSelector(store=>store.auth)
 
   const changeeventhandler=(e)=>{
     setinput({...input,[e.target.name]:e.target.value})
@@ -42,6 +46,7 @@ const Signup = () => {
     formdata.append("file",input.file)
    }
     try {
+      dispatch(setLoading(true))
       console.log(input);
       const res=await  axios.post(`${USER_API_END_POINT}/register`,formdata,{
         headers:{
@@ -61,6 +66,8 @@ const Signup = () => {
       toast.error(error.response.data.message)
       
       
+    }finally{
+        dispatch(setLoading(false))
     }
     
   }
@@ -160,7 +167,11 @@ const Signup = () => {
 
           </div>
 
-          <Button type="submit"  className="w-full my-4">Signup</Button>
+          {
+              loading ? <Button className="w-full my-4 "> <Loader2 className="mr-2 h-4 w-4 animate-spin"/>Please wait</Button>:<Button type="submit"  className="w-full my-4">Signup</Button>
+              }
+
+          
           <span className="text-sm">Already have an account? <Link to="/Login" className="text-blue-800">Login</Link></span>
           
         </form>
