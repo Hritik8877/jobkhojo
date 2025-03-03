@@ -2,6 +2,7 @@ import React from 'react'
 import Navbar from './shared/Navbar'
 import HeroSection from './HeroSection'
 import CategoryCarouser from '@/CategoryCarouser'
+import LatestJobs from '@/LatestJobs'
 
 const Home = () => {
   return (
@@ -9,6 +10,7 @@ const Home = () => {
       <Navbar/>
       <HeroSection/>
       <CategoryCarouser/>
+      <LatestJobs/>
     </div>
   )
 }
