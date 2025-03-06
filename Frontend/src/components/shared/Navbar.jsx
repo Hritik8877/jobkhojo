@@ -16,14 +16,14 @@ const Navbar = () => {
       </div>
       <div className="flex items-center gap-12">
         <ul className="flex font-medium items-center gap-5">
-          <li>Home</li>
-          <li>Jobs</li>
-          <li>Browse</li>
+          <li className="hover:text-[rgba(2,80,248,0.55)]"><Link to="/">Home</Link></li>
+          <li className="hover:text-[rgba(2,80,248,0.55)]"><Link to="/jobs">Jobs</Link></li>
+          <li className="hover:text-[rgba(2,80,248,0.55)]"><Link to="/browse">Browse</Link></li>
         </ul>
           {
             !user?(
               <div>
-                <Link to="/login"><Button variant="outLine"> Login</Button></Link>
+                <Link to="/login"><Button variant="outLine" className=" hover:text-blue-700"> Login</Button></Link>
                 <Link to ="/signup"><Button className="bg-blue-500 hover:bg-blue-700">Signup</Button></Link>
                 
               </div>
