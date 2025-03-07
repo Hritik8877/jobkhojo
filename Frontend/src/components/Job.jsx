@@ -12,12 +12,12 @@ const Job = () => {
       <Button varient='outline' className='rounded-full 'size='icon'> <Bookmark/></Button>
       </div>
       <div className='flex items-center gap-2 my-2'>
-      <Button>
+    
         <Avatar>
             <AvatarImage  src='https://static.vecteezy.com/system/resources/previews/019/466/990/non_2x/dell-logo-on-white-background-free-vector.jpg'/>
 
         </Avatar>
-      </Button>
+    
       <div>
         <h1 className='font-medium text-lg'>Company Name</h1>
         <p className='text-sm text-gray-500'>India</p>
@@ -33,7 +33,7 @@ const Job = () => {
                   <Badge className={'text-red-700 font-bold'} variant='ghost'>Part Time</Badge>
                   <Badge className={'text-purple-700 font-bold'} variant='ghost'>24LPA</Badge>
         </div>
-        <div className='flex items-center gap-4' >
+        <div className='flex items-center gap-4 space-y-2' >
             <Button variant='outline'>
                 Details
             </Button>
