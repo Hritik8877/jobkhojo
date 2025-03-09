@@ -10,7 +10,7 @@ const Latestjobcard = () => {
         </div>
         <div>
             <h1 className='font-bold text-lg my-2'>Job Title</h1>
-            <p className='text-sm  text-gray-600'>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+            <p className='text-sm  text-gray-600'>Lorem ipsum dolor sit, amet consectetur adipisicing elit Lorem, ipsum dolor..</p>
         </div>
 
         <div className='flex items-center gap-2 mt-4 '>
