@@ -10,7 +10,8 @@ import axios from "axios";
 import { USER_API_END_POINT } from "@/utils/constant";
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading } from "@/redux/authslice";
+import { setLoading } from "@/redux/userSlice";
+import { Loader2 } from "lucide-react";
 
 const Signup = () => {
   const [input,setinput]=useState({
@@ -89,7 +90,7 @@ const Signup = () => {
               value={input.fullName}
               name="fullName"
               onChange={changeeventhandler}
-              placeholder="Hritik"
+              placeholder="Enter your Name"
               
             />
           </div>
@@ -100,7 +101,7 @@ const Signup = () => {
               value={input.email}
               name="email"
               onChange={changeeventhandler}
-              placeholder="Email@gmail.com"
+              placeholder="Enter your email"
               
             />
           </div>
@@ -111,7 +112,7 @@ const Signup = () => {
               value={input.phoneNumber}
               name="phoneNumber"
               onChange={changeeventhandler}
-              placeholder="8409397263"
+              placeholder="Enter your phone number"
               
             />
           </div>
@@ -122,7 +123,7 @@ const Signup = () => {
               value={input.password}
               name="password"
               onChange={changeeventhandler}
-              placeholder="Hritik"
+              placeholder="Enter your password"
               
             />
           </div>

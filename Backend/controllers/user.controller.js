@@ -89,11 +89,13 @@ export const login = async (req, res) => {
         maxAge: 1 * 24 * 60 * 60 * 1000,
         httpOnly: true,
         sameSite: "strict",
+        secure: false 
         
-      })
+      },)
       .json({
         message: `welcome back ${user.fullname}`,
         success: true,
+        user
       });
   } catch (error) {
     console.log(error);

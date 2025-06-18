@@ -10,8 +10,7 @@ import { toast } from "sonner";
 import axios from "axios";
 import { USER_API_END_POINT } from "@/utils/constant";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading } from "@/redux/authslice";
-import store from "@/redux/store";
+import { setLoading, setUser } from "@/redux/userSlice";
 import { Loader2 } from "lucide-react";
 
 const Login = () => {
@@ -24,7 +23,9 @@ const Login = () => {
 
     const navigate=useNavigate();
     const dispatch=useDispatch();
-    const {loading}=useSelector(store=>store.auth)
+    const {loading}=useSelector((state)=>state.auth);
+    console.log("Redux loading:", loading);
+
   
     const changeeventhandler=(e)=>{
       setinput({...input,[e.target.name]:e.target.value})
@@ -38,14 +39,16 @@ const Login = () => {
       try {
         console.log(input);
         dispatch(setLoading(true));
+        console.log('Dispatched setLoading(true)');
         const res=await  axios.post(`${USER_API_END_POINT}/login`,input,{
           headers:{
             "Content-Type":"application/json"
           },
-         // withCredentials:true
+          withCredentials:true
         });
         if(res.data.success){
           console.log(res.data);
+          dispatch(setUser(res.data.user))
           navigate("/")
           toast.success(res.data.message)
           
@@ -78,7 +81,7 @@ const Login = () => {
               value={input.email}
               name="email"
               onChange={changeeventhandler}
-              placeholder="Email@gmail.com"
+              placeholder="Enter your email"
               
             />
           </div>
@@ -89,7 +92,7 @@ const Login = () => {
               value={input.password}
               name="password"
               onChange={changeeventhandler}
-              placeholder="Hritik"
+              placeholder="Enter your password"
               
             />
           </div>

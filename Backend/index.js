@@ -16,7 +16,7 @@ app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 const corsoption={
     origin: 'http://localhost:5173',
-    Credentials:true,
+    credentials:true,
 
 }
 
