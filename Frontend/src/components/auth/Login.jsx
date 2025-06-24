@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../shared/Navbar";
 import { Label } from "../ui/Label";
-import { RadioGroup } from "../ui/Radio-group";
+import { RadioGroup } from "../ui/RadioGroup";
 import { Input } from "../ui/Input";
 import { Button } from "../ui/Button";
 import { Link } from "react-router-dom";

@@ -1,5 +1,5 @@
 import React from 'react'
-import { RadioGroup, RadioGroupItem } from './ui/Radio-group'
+import { RadioGroup, RadioGroupItem } from './ui/RadioGroup'
 import { data } from 'autoprefixer'
 import { Label } from './ui/Label'
 
