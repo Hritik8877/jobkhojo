@@ -1,7 +1,7 @@
 import React from 'react'
 import { RadioGroup, RadioGroupItem } from './ui/radio-group'
 import { data } from 'autoprefixer'
-import { Label } from './ui/label'
+import { Label } from './ui/Label'
 
 
 const filterData=[

@@ -6,7 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "./ui/dialog";
-import { Label } from "./ui/label";
+import { Label } from "./ui/Label";
 import { Input } from "./ui/input";
 import { Loader2 } from "lucide-react";
 import { Button } from "./ui/button";

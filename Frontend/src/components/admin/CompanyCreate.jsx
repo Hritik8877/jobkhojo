@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "../shared/Navbar";
-import { Label } from "../ui/label";
+import { Label } from "../ui/Label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
