@@ -1,17 +1,25 @@
 import { User } from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import geturl from "../utils/datauri.js";
+import cloudinary from "../utils/Cloudinary.js";
 export const register = async (req, res) => {
   try {
     const { fullname, email, phoneNumber, password, role } = req.body;
-    console.log(fullname, email, phoneNumber, password, role );
-    
+    console.log(fullname, email, phoneNumber, password, role);
+
     if (!fullname || !email || !phoneNumber || !password || !role) {
       return res.status(400).json({
         message: "something is missing",
         success: false,
       });
     }
+
+    const file = req.file;
+    const fileuri = geturl(file);
+    const cloudinaryresponse = await cloudinary.uploader.upload(
+      fileuri.content
+    );
     const user = await User.findOne({ email });
     if (user) {
       return res.status(400).json({
@@ -26,6 +34,9 @@ export const register = async (req, res) => {
       phoneNumber,
       password: hashedpassword,
       role,
+      profile: {
+        prfilephoto:cloudinaryresponse.secure_url,
+      },
     });
 
     return res.status(201).json({
@@ -40,7 +51,7 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { email, password, role } = req.body;
-    console.log( email, password, role );
+    console.log(email, password, role);
     if (!email || !password || !role) {
       return res.status(400).json({
         message: "something is missing",
@@ -89,65 +100,69 @@ export const login = async (req, res) => {
         maxAge: 1 * 24 * 60 * 60 * 1000,
         httpOnly: true,
         sameSite: "strict",
-        secure: false 
-        
-      },)
+        secure: false,
+      })
       .json({
         message: `welcome back ${user.fullname}`,
         success: true,
-        user
+        user,
       });
   } catch (error) {
     console.log(error);
   }
 };
 
-export const logout=async(req,res)=>{
-    try {
-        return res.status(200).cookie("token","",{maxAge:0}).json({
-            message:"logged out successfully",
-            success:true
-        })
-        
-    } catch (error) {
-        console.log(error);
-        
-    }
-}
-
-export const updateprofile=async(req,res)=>{
+export const logout = async (req, res) => {
   try {
-    const {fullname,email,phoneNumber,bio,skills}=req.body;
-    const file=req.file;
+    return res.status(200).cookie("token", "", { maxAge: 0 }).json({
+      message: "logged out successfully",
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateprofile = async (req, res) => {
+  try {
+    const { fullname, email, phoneNumber, bio, skills } = req.body;
+    const file = req.file;
     // if(!fullname||!email||!phoneNumber||!bio||!skills){
     //     return res.status(400).json({
     //         message:"something is missing",
     //         success:false
     //     })
     // }
-     
     //cloudinary comes here
-    if(skills){
-      const skillsary=skills.split(",");
+    const fileurl = geturl(file);
+    const cloudinaryresponse = await cloudinary.uploader.upload(
+      fileurl.content
+    );
 
+    let skillsary;
+    if (skills) {
+      skillsary = skills.split(",");
     }
 
-    const userId=req._id;
-    let user=await User.findById({_id:userId});
-    if(!user){
-        return res.status(400).json({
-            message:"user dosent exists",
-            success:false
-        })
+    const userId = req._id;
+    let user = await User.findById({ _id: userId });
+    if (!user) {
+      return res.status(400).json({
+        message: "user dosent exists",
+        success: false,
+      });
     }
-    if(fullname)user.fullname=fullname;
-    if(email)user.email=email;
-    if(phoneNumber)user.phoneNumber=phoneNumber;
-    if(bio)user.profile.bio=bio;
-    if(skills)user.profile.skills=skillsary;
-  
-  //resume are pwnding
+    if (fullname) user.fullname = fullname;
+    if (email) user.email = email;
+    if (phoneNumber) user.phoneNumber = phoneNumber;
+    if (bio) user.profile.bio = bio;
+    if (skills) user.profile.skills = skillsary;
 
+    //resume are pwnding
+    if (cloudinaryresponse) {
+      user.profile.resume = cloudinaryresponse.secure_url;
+      user.profile.resumeOriginalName = file.originalname;
+    }
 
     await user.save();
     user = {
@@ -164,9 +179,7 @@ export const updateprofile=async(req,res)=>{
       user,
       success: true,
     });
-    
   } catch (error) {
     console.log(error);
-    
   }
-}
+};
