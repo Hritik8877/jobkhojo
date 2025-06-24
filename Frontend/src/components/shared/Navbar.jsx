@@ -56,9 +56,24 @@ const Navbar = () => {
       
         <div className="hidden md:flex items-center gap-12">
           <ul className="flex font-medium items-center gap-5">
-            <li className="hover:text-[rgba(2,80,248,0.55)]"><Link to="/">Home</Link></li>
+
+            {
+              user && user.role=="recruiter"?(
+                <>
+                 <li className="hover:text-[rgba(2,80,248,0.55)]"><Link to="/admin/company">Companies</Link></li>
+            <li className="hover:text-[rgba(2,80,248,0.55)]"><Link to="/admin/jobs">Jobs</Link></li>
+                </>
+
+              ):  (
+                <>
+                <li className="hover:text-[rgba(2,80,248,0.55)]"><Link to="/">Home</Link></li>
             <li className="hover:text-[rgba(2,80,248,0.55)]"><Link to="/jobs">Jobs</Link></li>
             <li className="hover:text-[rgba(2,80,248,0.55)]"><Link to="/browse">Browse</Link></li>
+                
+                </>
+              )
+            }
+            
           </ul>
 
           {!user ? (
@@ -88,10 +103,14 @@ const Navbar = () => {
                   </div>
                 </div>
                 <div className="flex flex-col mt-4 space-y-2">
-                  <div className="flex items-center gap-2 cursor-pointer">
+
+                  {
+                    user && user.role=='student' && (<div className="flex items-center gap-2 cursor-pointer">
                     <User2 />
                     <Button variant="link"><Link to="/profile">View Profile</Link></Button>
-                  </div>
+                  </div> )
+                  }
+                 
                   <div className="flex items-center gap-2 cursor-pointer">
                     <LogOut />
                     <Button onClick={logouthandler} variant="link"  >Logout</Button>
