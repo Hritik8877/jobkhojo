@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Navbar from "./shared/Navbar";
 import { ArrowLeft, Loader2 } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "./ui/Button";
 import { Label } from "./ui/Label";
-import { Input } from "./ui/input";
+import { Input } from "./ui/Input";
 import axios from "axios";
 import { COMPANY_API_END_POINT } from "@/utils/constant";
 import { useNavigate, useParams } from "react-router-dom";

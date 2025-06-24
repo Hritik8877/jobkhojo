@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover";
-import { Avatar, AvatarImage } from "../ui/avatar.jsx";
-import { Button } from "../ui/button";
+import { Popover, PopoverTrigger, PopoverContent } from "../ui/Popover";
+import { Avatar, AvatarImage } from "../ui/Avatar.jsx";
+import { Button } from "../ui/Button";
 import { LogOut, Menu, User2, X } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";

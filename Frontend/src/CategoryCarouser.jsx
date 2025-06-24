@@ -5,8 +5,8 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "./components/ui/carousel";
-import { Button } from "./components/ui/button";
+} from "./components/ui/Carousel";
+import { Button } from "./components/ui/Button";
 
 const CategoryCarouser = () => {
   const category = [

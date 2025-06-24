@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Navbar from "./shared/Navbar";
-import { Avatar, AvatarImage } from "./ui/avatar";
-import { Button } from "./ui/button";
+import { Avatar, AvatarImage } from "./ui/Avatar";
+import { Button } from "./ui/Button";
 import { Contact, Mail, Pen } from "lucide-react";
-import { Badge } from "./ui/badge";
+import { Badge } from "./ui/Badge";
 import { Label } from "./ui/Label";
 import AppliedJobTable from "./AppliedJobTable";
 import UpdateProfileDailog from "./UpdateProfileDailog";

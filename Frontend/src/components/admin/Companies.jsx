@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from '../shared/Navbar'
-import { Input } from '../ui/input'
-import { Button } from '../ui/button'
+import { Input } from '../ui/Input'
+import { Button } from '../ui/Button'
 import CompaniesTable from './CompaniesTable'
 import { useNavigate } from 'react-router-dom'
 

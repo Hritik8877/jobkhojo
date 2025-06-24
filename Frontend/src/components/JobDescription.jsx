@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Badge } from "./ui/badge";
-import { Button } from "./ui/button";
+import { Badge } from "./ui/Badge";
+import { Button } from "./ui/Button";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { setSingleJob } from "@/redux/jobSlice";
