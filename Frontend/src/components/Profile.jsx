@@ -7,11 +7,14 @@ import { Badge } from "./ui/badge";
 import { Label } from "./ui/label";
 import AppliedJobTable from "./AppliedJobTable";
 import UpdateProfileDailog from "./UpdateProfileDailog";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
   const [open,setopen]=useState(false)
   const skills = ["Html", "css", "JavaScript", "React"];
   const isReume = true;
+
+  const {user}=useSelector(store=>store.auth)
   return (
     <div>
       <Navbar />
@@ -20,15 +23,14 @@ const Profile = () => {
           <div className="flex items-center gap-4">
             <Avatar className="h-24 w-24">
               <AvatarImage
-                src="https://static.vecteezy.com/system/resources/previews/019/466/990/non_2x/dell-logo-on-white-background-free-vector.jpg"
+                src={user?.profile?.prfilephoto}
                 alt="profile pic"
               />
             </Avatar>
             <div>
-              <h1 className="font-medium text-xl">Full Name</h1>
+              <h1 className="font-medium text-xl">{user?.fullname}</h1>
               <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio,
-                consequatur?
+                {user?.profile?.bio}
               </p>
             </div>
           </div>
@@ -43,18 +45,18 @@ const Profile = () => {
         <div className="my-5">
           <div className="flex items-center gap-4 my-2">
             <Mail />
-            <span>Hritik@gmail.com</span>
+            <span>{user?.email}</span>
           </div>
           <div className="flex items-center gap-3">
             <Contact />
-            <span>8409397263</span>
+            <span>{user?.phoneNumber}</span>
           </div>
         </div>
 
         <div className="my-5">
           <h1>Skills</h1>
-          {skills.length != 0 ? (
-            skills.map((item, idx) => (
+          {user?.profile?.skills.length != 0 ? (
+            user?.profile?.skills.map((item, idx) => (
               <Badge key={idx} className="mx-2">
                 {item}
               </Badge>
@@ -67,8 +69,8 @@ const Profile = () => {
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label className="text-md font-bold">Resume</Label>
           {isReume ? (
-            <a href="/https://youtube.com" target="blank" className="text-blue-500 w-full hover:underline">
-              Resume.pdf
+            <a href={user?.profile?.resume} target="blank" className="text-blue-500 w-full hover:underline">
+              {user?.profile?.resumeOriginalName}
             </a>
           ) : (
             <span>N/A</span>

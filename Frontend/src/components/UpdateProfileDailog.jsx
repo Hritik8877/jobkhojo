@@ -47,9 +47,10 @@ const UpdateProfileDailog = ({ open, setopen }) => {
     }
 
     try {
+      setloading(true);
       const res = await axios.post(
         `${USER_API_END_POINT}/profile/update`,
-        FormData,
+        formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -66,6 +67,7 @@ const UpdateProfileDailog = ({ open, setopen }) => {
       console.log(error.message);
     } finally {
       setopen(false);
+      setloading(false)
     }
   };
 
@@ -179,6 +181,7 @@ const UpdateProfileDailog = ({ open, setopen }) => {
                   id="File"
                   type="file"
                   name="file"
+
                   accept="application/pdf"
                   onChange={filechangehandler}
                   placeholder="Enter the File"

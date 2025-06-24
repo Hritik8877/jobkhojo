@@ -3,12 +3,38 @@ import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover";
 import { Avatar, AvatarImage } from "../ui/avatar.jsx";
 import { Button } from "../ui/button";
 import { LogOut, Menu, User2, X } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { setUser } from "@/redux/userSlice";
+import { toast } from "sonner";
+import { USER_API_END_POINT } from "@/utils/constant";
 
 const Navbar = () => {
   const { user } = useSelector((store) => store.auth);
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch=useDispatch()
+  const navigate=useNavigate();
+
+
+ const   logouthandler=async()=>{
+    try {
+      const res=await axios.get(`${USER_API_END_POINT}/logout`, {
+  withCredentials: true,
+})
+      if(res.data.success){
+
+        dispatch(setUser(null))
+        navigate("/")
+        toast.success(res.data.message)
+      }
+      
+    } catch (error) {
+      console.log(error.message);
+      
+      
+    }
+  }
 
   return (
     <div className="w-full shadow-sm border-b">
@@ -48,17 +74,17 @@ const Navbar = () => {
             <Popover>
               <PopoverTrigger asChild>
                 <Avatar className="cursor-pointer">
-                  <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                  <AvatarImage src={user?.profile?.prfilephoto} alt="@shadcn" />
                 </Avatar>
               </PopoverTrigger>
               <PopoverContent className="w-80">
                 <div className="flex items-center gap-3">
                   <Avatar>
-                    <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                    <AvatarImage src={user?.profile?.prfilephoto} alt="@shadcn" />
                   </Avatar>
                   <div>
-                    <h4 className="font-medium">Hritik Kumar</h4>
-                    <p className="text-sm text-gray-500">Lorem ipsum dolor sit amet.</p>
+                    <h4 className="font-medium">{user?.fullname}</h4>
+                    <p className="text-sm text-gray-500">{user?.profile?.bio}</p>
                   </div>
                 </div>
                 <div className="flex flex-col mt-4 space-y-2">
@@ -68,7 +94,7 @@ const Navbar = () => {
                   </div>
                   <div className="flex items-center gap-2 cursor-pointer">
                     <LogOut />
-                    <Button variant="link">Logout</Button>
+                    <Button onClick={logouthandler} variant="link"  >Logout</Button>
                   </div>
                 </div>
               </PopoverContent>
@@ -92,7 +118,7 @@ const Navbar = () => {
           ) : (
             <div className="flex flex-col gap-2 mt-3">
               <Link to="/profile" onClick={() => setIsOpen(false)}><Button variant="link" className="flex items-center gap-2"><User2 />View Profile</Button></Link>
-              <Button variant="link" className="flex items-center gap-2"><LogOut />Logout</Button>
+              <Button variant="link" className="flex items-center gap-2"  onClick={logouthandler}><LogOut />Logout</Button>
             </div>
           )}
         </div>
