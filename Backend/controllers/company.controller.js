@@ -1,4 +1,6 @@
 import {Company} from "../models/company.model.js";
+import cloudinary from "../utils/Cloudinary.js";
+import geturl from "../utils/datauri.js";
 export const registercompany=async(req,res)=>{
     try {
         const {CompanyName}=req.body;
@@ -81,7 +83,12 @@ export const updatecompany=async(req,res)=>{
        const {name,description,website,location}=req.body;
        const file=req.file;//file store on cloudinary
 
-       const updatedata={name,description,website,location};
+       const fileuri=geturl(file)
+       const cloudresponse=await cloudinary.uploader.upload(fileuri.content);
+       const logo=cloudresponse.secure_url;
+
+
+       const updatedata={name,description,website,location,logo};
        const company=await Company.findByIdAndUpdate(req.params.id,updatedata,{new:true});
        if(!company){
         res.status(404).json({

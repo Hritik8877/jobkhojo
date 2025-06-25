@@ -9,7 +9,7 @@ import Profile from './components/Profile.jsx';
 import JobDescription from './components/JobDescription.jsx';
 import Companies from './components/admin/Companies.jsx';
 import CompanyCreate from './components/admin/CompanyCreate.jsx';
-import CompanyUpdate from './components/CompanyUpdate.jsx';
+import CompanyUpdate from './components/admin/CompanyUpdate.jsx';
 
 const appRouter = createBrowserRouter([
   {

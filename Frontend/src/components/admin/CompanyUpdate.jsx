@@ -1,13 +1,14 @@
-import React, { useState } from "react";
-import Navbar from "./shared/Navbar";
+import React, { useEffect, useState } from "react";
+import Navbar from "../shared/Navbar";
 import { ArrowLeft, Loader2 } from "lucide-react";
-import { Button } from "./ui/Button";
-import { Label } from "./ui/Label";
-import { Input } from "./ui/Input";
+import { Button } from "../ui/Button";
+import { Label } from "../ui/Label";
+import { Input } from "../ui/Input";
 import axios from "axios";
 import { COMPANY_API_END_POINT } from "@/utils/constant";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
+import { useSelector } from "react-redux";
 
 const CompanyUpdate = () => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const CompanyUpdate = () => {
     website: "",
     file: null,
   });
+  const {singleCompany}=useSelector(store=>store.company)
   const chageeventhandler = (e) => {
     setinput({ ...input, [e.target.name]: e.target.value });
   };
@@ -66,6 +68,16 @@ const CompanyUpdate = () => {
         setloading(false)
     }
   };
+
+  useEffect(()=>{
+setinput({
+   name:singleCompany.name|| "",
+    description:singleCompany.description|| "",
+    location:singleCompany.location|| "",
+    website:singleCompany.website|| "",
+    file:singleCompany.file|| null,
+})
+  },[singleCompany])
   return (
     <div>
       <Navbar />
