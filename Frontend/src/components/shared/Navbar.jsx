@@ -60,7 +60,7 @@ const Navbar = () => {
             {
               user && user.role=="recruiter"?(
                 <>
-                 <li className="hover:text-[rgba(2,80,248,0.55)]"><Link to="/admin/company">Companies</Link></li>
+                 <li className="hover:text-[rgba(2,80,248,0.55)]"><Link to="/admin/companies">Companies</Link></li>
             <li className="hover:text-[rgba(2,80,248,0.55)]"><Link to="/admin/jobs">Jobs</Link></li>
                 </>
 
