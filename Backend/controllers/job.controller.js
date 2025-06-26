@@ -105,7 +105,8 @@ export const getadminjob=async(req,res)=>{
             });
         }
         const jobs=await Job.find({created_by:adminid}).populate({
-            path :'company'
+            path :'company',
+            createdAt:-1
         });
         if(!jobs){
             res.status(404).json({
