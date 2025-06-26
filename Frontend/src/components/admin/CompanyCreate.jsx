@@ -9,8 +9,10 @@ import { COMPANY_API_END_POINT } from "@/utils/constant";
 import { toast } from "sonner";
 import { useDispatch } from "react-redux";
 import { setsingleCompany } from "@/redux/companySlice";
+import useGetCompanybyId from "@/hooks/useGetCompanybyId";
 
 const CompanyCreate = () => {
+  useGetCompanybyId()
   const navigate=useNavigate();
   const dispatch=useDispatch();
   const [companyName,SetCompanyName]=useState();

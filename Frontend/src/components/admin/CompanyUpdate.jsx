@@ -9,12 +9,16 @@ import { COMPANY_API_END_POINT } from "@/utils/constant";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
+import useGetCompanybyId from "@/hooks/useGetCompanybyId";
 
 const CompanyUpdate = () => {
+  const params = useParams();
+  const load = useGetCompanybyId(params.id);
+  
   const navigate = useNavigate();
 
   const [loading, setloading] = useState(false);
-  const params = useParams();
+    
   const [input, setinput] = useState({
     name: "",
     description: "",
@@ -22,6 +26,8 @@ const CompanyUpdate = () => {
     website: "",
     file: null,
   });
+
+  useGetCompanybyId(params.id)
   const {singleCompany}=useSelector(store=>store.company)
   const chageeventhandler = (e) => {
     setinput({ ...input, [e.target.name]: e.target.value });
@@ -33,7 +39,7 @@ const CompanyUpdate = () => {
   };
 
   const submithandler = async (e) => {
-    setloading;
+    setloading(true);
     e.preventDefault();
     const formdata = new FormData();
     formdata.append("name", input.name);
@@ -69,15 +75,17 @@ const CompanyUpdate = () => {
     }
   };
 
-  useEffect(()=>{
-setinput({
-   name:singleCompany.name|| "",
-    description:singleCompany.description|| "",
-    location:singleCompany.location|| "",
-    website:singleCompany.website|| "",
-    file:singleCompany.file|| null,
-})
-  },[singleCompany])
+  useEffect(() => {
+  if (singleCompany && Object.keys(singleCompany).length > 0) {
+    setinput({
+      name: singleCompany.name || "",
+      description: singleCompany.description || "",
+      location: singleCompany.location || "",
+      website: singleCompany.website || "",
+      file: null,
+    });
+  }
+}, [singleCompany]);
   return (
     <div>
       <Navbar />
