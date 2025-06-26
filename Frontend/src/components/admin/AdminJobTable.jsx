@@ -8,35 +8,32 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/Table";
-import { Avatar, AvatarImage } from "../ui/Avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/Popover";
 import { Edit2, MoreHorizontal } from "lucide-react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const AdminJobTable = () => {
-  const navigate=useNavigate();
-  const {companies,searchcompany} = useSelector((store) => store.company);
-  const {alladminjob}=useSelector((store)=>store.job)
-  const [filteralladminjob,setfilteralladminjob]=useState(alladminjob);
+  const navigate = useNavigate();
+  const { alladminjob, searchjobbytext } = useSelector((store) => store.job);
+  const [filteralladminjob, setfilteralladminjob] = useState([]);
 
-useEffect(()=>{
-  const filteredcompany=alladminjob.length>=0&& alladminjob.filter((job)=>{
-    if(!searchcompany){
-      return true
-    };
-    return company?.name.toLowerCase().includes(searchcompany)
+  useEffect(() => {
+    const filtered = alladminjob.filter((job) => {
+      const query = searchjobbytext?.toLowerCase() || "";
+      return (
+        job?.title?.toLowerCase().includes(query) ||
+        job?.company?.name?.toLowerCase().includes(query)
+      );
+    });
 
-  })
+    setfilteralladminjob(filtered);
+  }, [alladminjob, searchjobbytext]);
 
-  setfilteralladminjob(filteredcompany)
-
-
-},[companies,searchcompany])
   return (
     <div>
       <Table>
-        <TableCaption>A List of your recent Psted Jobs</TableCaption>
+        <TableCaption>A List of your recently posted jobs</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead>Company Name</TableHead>
@@ -46,23 +43,21 @@ useEffect(()=>{
           </TableRow>
         </TableHeader>
         <TableBody>
-          {companies.length === 0 ? (
+          {filteralladminjob.length === 0 ? (
             <TableRow>
               <TableCell colSpan={4} className="text-center">
-                No Companies Found
+                No jobs found
               </TableCell>
             </TableRow>
           ) : (
             filteralladminjob.map((job) => (
               <TableRow key={job._id}>
+                <TableCell>{job.company?.name || "N/A"}</TableCell>
+                <TableCell>{job.title || "N/A"}</TableCell>
                 <TableCell>
-                  <Avatar>
-                    <AvatarImage src={job.Name} />
-                  </Avatar>
-                </TableCell>
-                <TableCell>{job.role}</TableCell>
-                <TableCell>
-                  {new Date(job.createdAt).toLocaleDateString()}
+                  {job.createdAt
+                    ? new Date(job.createdAt).toLocaleDateString()
+                    : "N/A"}
                 </TableCell>
                 <TableCell className="text-right cursor-pointer">
                   <Popover>
@@ -70,7 +65,10 @@ useEffect(()=>{
                       <MoreHorizontal />
                     </PopoverTrigger>
                     <PopoverContent className="w-32">
-                      <div onClick={()=>navigate(`/admin/jobs/${job._id}`)} className="flex items-center gap-2 w-fit cursor-pointer">
+                      <div
+                        onClick={() => navigate(`/admin/jobs/${job._id}`)}
+                        className="flex items-center gap-2 w-fit cursor-pointer"
+                      >
                         <Edit2 className="w-4" />
                         <span>Edit</span>
                       </div>

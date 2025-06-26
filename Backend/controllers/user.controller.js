@@ -15,6 +15,41 @@ export const register = async (req, res) => {
       });
     }
 
+    if (!fullname) {
+      return res.status(400).json({
+        message: "fullname is missing",
+        success: false,
+      });
+    }
+
+    if (!email) {
+      return res.status(400).json({
+        message: "email is missing",
+        success: false,
+      });
+    }
+
+    if (!phoneNumber) {
+      return res.status(400).json({
+        message: "phoneNumber is missing",
+        success: false,
+      });
+    }
+
+    if (!password || !role) {
+      return res.status(400).json({
+        message: "password is missing",
+        success: false,
+      });
+    }
+
+    if (!role) {
+      return res.status(400).json({
+        message: "role is missing",
+        success: false,
+      });
+    }
+
     const file = req.file;
     const fileuri = geturl(file);
     const cloudinaryresponse = await cloudinary.uploader.upload(
