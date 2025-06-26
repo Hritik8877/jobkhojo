@@ -4,12 +4,14 @@ import Signup from './components/auth/Signup.jsx';
 import Home from './components/Home.jsx';
 import Login from './components/auth/Login.jsx';
 import Jobs from './components/Jobs.jsx';
+import AdminJobs from './components/admin/AdminJobs.jsx'
 import Browse from './components/Browse.jsx';
 import Profile from './components/Profile.jsx';
 import JobDescription from './components/JobDescription.jsx';
 import Companies from './components/admin/Companies.jsx';
 import CompanyCreate from './components/admin/CompanyCreate.jsx';
 import CompanyUpdate from './components/admin/CompanyUpdate.jsx';
+
 
 const appRouter = createBrowserRouter([
   {
@@ -57,6 +59,13 @@ const appRouter = createBrowserRouter([
     path:'/admin/company/:id',
     element:<CompanyUpdate/>
   }
+  //for job
+  ,
+
+  {
+    path:'/admin/jobs',
+    element:<AdminJobs/>
+  },
 
 ]);
 
